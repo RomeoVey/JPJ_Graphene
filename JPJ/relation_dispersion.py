@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from numpy import *
 from mpl_toolkits import mplot3d
 
-N = 100
+N = 1000
 
 t = 0.1
 
@@ -34,13 +34,30 @@ def plot_energy(kx,ky,t,a):
             M_plus[i,j] = energy(kx[i],ky[j],t,a)[0]
             M_moins[i,j] = energy(kx[i],ky[j],t,a)[1]
 
-        kx_fix = kx[i]*ones(len(ky))
-        ax.plot3D(kx_fix,ky,M_plus[i,:], color = 'blue')
-        ax.plot3D(kx_fix,ky,M_moins[i,:], color = 'red')
-    for j in range(len(ky)):
-        ky_fix = ky[j]*ones(len(kx))
-        ax.plot3D(kx,ky_fix,M_plus[:,j], color = 'blue')
-        ax.plot3D(kx,ky_fix,M_moins[:,j], color = 'red')
+    step = 50
+    l_kx = len(kx)//step
+    l_ky = len(ky)//step
+    kx_less = zeros(l_ky)
+    ky_less = zeros(l_kx)
+    MP = zeros((l_kx,l_ky))
+    MM = zeros((l_kx,l_ky))
+    for i in range(l_kx):
+        ky_less[i] = ky[i*step]
+    for j in range(l_ky):
+        kx_less[j] = kx[j*step]
+
+    for i in range(l_kx):
+        for j in range(l_ky):
+            MP[i,j] = M_plus[i*step,j*step]
+            MM[i,j] = M_moins[i*step,j*step]
+    for i in range(l_kx):
+        kx_fix = kx_less[i]*ones(l_ky)
+        ax.plot3D(kx_fix,ky_less,MP[i,:], color = 'blue')
+        ax.plot3D(kx_fix,ky_less,MM[i,:], color = 'red')
+    for j in range(l_ky):
+        ky_fix = ky_less[j]*ones(l_kx)
+        ax.plot3D(kx_less,ky_fix,MP[:,j], color = 'blue')
+        ax.plot3D(kx_less,ky_fix,MM[:,j], color = 'red')
     plt.show()
 
 plot_energy(kx,ky,t,a)
