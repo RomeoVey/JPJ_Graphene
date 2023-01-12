@@ -99,3 +99,7 @@ print(s)
 plt.plot(energy,dos) 
 plt.grid()
 plt.show() # trace le graphique
+
+
+
+# je modifie 
