@@ -33,36 +33,36 @@ listeb[0] = b #rentre le b0 dans la liste
 
 #Calculs des coefs
 for n in range(1,N):#parcours les nombres de 1 à N-1 compris
-        aplus=0  #remet à zero la variable locale
-        for i in range(N-n,N+n+1):#application du Hamiltonien
-            for j in range(N-n,N+n+1):
-                psiplus[i,j] = -b*psiplus[i,j]
-        
-        for i in range(N-n,N+n+1) :#application du Hamiltonien à psi_n
-            for j in range(N-n,N+n+1):
-                if n%2==0: #((abs(i)%2 == 0) and (abs(j)%2 == 0)) or ((abs(i)%2 == 1) and (abs(j)%2 == 1))
-                    psiplus[i,j] = psiplus[i,j]+t*(psimoins[i-1,j]+ psimoins[i,j-1]+psimoins[i,j+1])+e0*psimoins[i,j]
-                else: psiplus[i,j] = psiplus[i,j]+t*(psimoins[i+1,j]+ psimoins[i,j-1]+psimoins[i,j+1])+e0*psimoins[i,j]
-        for i in range(N-n,N+n+1) :  #parcours les nombres de N-n à N+n compris
-            for j in range(N-n,N+n+1):
-              aplus = aplus + psimoins[i,j]*psiplus[i,j];
-        a = aplus
-        bplus = 0  #remet à zero la variable locale
-        for i in range(N-n,N+n+1) :#parcours les nombres de N-n à N+n compris
-            for j in range(N-n,N+n+1):
-                psiplus[i,j] = psiplus[i,j]-a*psimoins[i,j]
-                bplus = bplus + (psiplus[i,j])**2
-        bplus = bplus**(1/2)
-        for i in range(N-n,N+n+1) :  #parcours les nombres de N-n à N+n compris
-            for j in range(N-n,N+n+1):
-                psiplus[i,j] = (1/bplus)*psiplus[i,j]
-        temp = psiplus  #pour inverser psiplus et psimoins
-        psiplus = psimoins  #pour inverser psiplus et psimoins
-        psimoins = temp  #pour inverser psiplus et psimoins
-        b = bplus
+    aplus=0  #remet à zero la variable locale
+    for i in range(N-n,N+n+1):#application du Hamiltonien
+        for j in range(N-n,N+n+1):
+            psiplus[i,j] = -b*psiplus[i,j]
     
-        listea[n] = a  #modifie la liste petit à petit
-        listeb[n] = b
+    for i in range(N-n,N+n+1) :#application du Hamiltonien à psi_n
+        for j in range(N-n,N+n+1):
+            if n%2==0: #((abs(i)%2 == 0) and (abs(j)%2 == 0)) or ((abs(i)%2 == 1) and (abs(j)%2 == 1))
+                psiplus[i,j] = psiplus[i,j]+t*(psimoins[i-1,j]+ psimoins[i,j-1]+psimoins[i,j+1])+e0*psimoins[i,j]
+            else: psiplus[i,j] = psiplus[i,j]+t*(psimoins[i+1,j]+ psimoins[i,j-1]+psimoins[i,j+1])+e0*psimoins[i,j]
+    for i in range(N-n,N+n+1) :  #parcours les nombres de N-n à N+n compris
+        for j in range(N-n,N+n+1):
+          aplus = aplus + psimoins[i,j]*psiplus[i,j];
+    a = aplus
+    bplus = 0  #remet à zero la variable locale
+    for i in range(N-n,N+n+1) :#parcours les nombres de N-n à N+n compris
+        for j in range(N-n,N+n+1):
+            psiplus[i,j] = psiplus[i,j]-a*psimoins[i,j]
+            bplus = bplus + (psiplus[i,j])**2
+    bplus = bplus**(1/2)
+    for i in range(N-n,N+n+1) :  #parcours les nombres de N-n à N+n compris
+        for j in range(N-n,N+n+1):
+            psiplus[i,j] = (1/bplus)*psiplus[i,j]
+    temp = psiplus  #pour inverser psiplus et psimoins
+    psiplus = psimoins  #pour inverser psiplus et psimoins
+    psimoins = temp  #pour inverser psiplus et psimoins
+    b = bplus
+
+    listea[n] = a  #modifie la liste petit à petit
+    listeb[n] = b
       
 #Calculs des coefs infinis
 ainf = 0.0
@@ -100,7 +100,3 @@ plt.plot(energy,dos)
 plt.grid()
 plt.show() # trace le graphique
 
-def energy(kx,ky,t,a):
-    e_plus = t*sqrt(1 + 4*(cos(ky*a*sqrt(3)/2)**2 + cos(kx*3*a/2)*cos(ky*a*sqrt(3)/2)))
-    e_moins = - e_plus
-    return e_plus,e_moins
