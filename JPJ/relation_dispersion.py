@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Thu Jan 12 16:21:49 2023
 
@@ -11,7 +10,7 @@ import matplotlib.pyplot as plt
 from numpy import *
 from mpl_toolkits import mplot3d
 
-N = 100
+N = 1000
 
 t = 0.1
 
@@ -25,6 +24,14 @@ def energy(kx,ky,t,a):
     e_moins = - e_plus
     return e_plus,e_moins
 
+def energy_line(kx,ky,t,a):
+    M_plus,M_moins = energy(0,ky,t,a)
+    plt.plot(ky[N//2:],M_plus[N//2:])
+    plt.plot(ky[N//2:],M_moins[N//2:]) 
+    plt.grid()
+    plt.show()
+    
+    
 def plot_energy(kx,ky,t,a):
     ax = plt.axes(projection = '3d')
     M_plus = zeros((N,N))
@@ -43,4 +50,6 @@ def plot_energy(kx,ky,t,a):
         ax.plot3D(kx,ky_fix,M_moins[:,j], color = 'red')
     plt.show()
 
-plot_energy(kx,ky,t,a)
+# plot_energy(kx,ky,t,a)
+
+energy_line(kx,ky,t,a)
