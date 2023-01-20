@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Wed Dec 14 18:02:04 2022
 
@@ -45,7 +44,7 @@ for n in range(1,N):#parcours les nombres de 1 à N-1 compris
             else: psiplus[i,j] = psiplus[i,j]+t*(psimoins[i+1,j]+ psimoins[i,j-1]+psimoins[i,j+1])+e0*psimoins[i,j]
     for i in range(N-n,N+n+1) :  #parcours les nombres de N-n à N+n compris
         for j in range(N-n,N+n+1):
-          aplus = aplus + psimoins[i,j]*psiplus[i,j];
+          aplus = aplus + psimoins[i,j]*psiplus[i,j]
     a = aplus
     bplus = 0  #remet à zero la variable locale
     for i in range(N-n,N+n+1) :#parcours les nombres de N-n à N+n compris
