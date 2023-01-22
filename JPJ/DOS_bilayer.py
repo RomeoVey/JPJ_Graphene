@@ -5,8 +5,8 @@ from scipy import *
 from time import*
 
 def plot_energy(L):
-    t = 1.0
-    s = 0.5
+    t = 1.42
+    s = 0.335
     e0 = 0.0
     eps = 0.00001
     psimoins = zeros((2*L+1, 2*L+1, 2))
@@ -14,8 +14,8 @@ def plot_energy(L):
     listea = zeros(L+1)
     listeb = zeros(L+1)
 
-    psimoins[L,L,0] = 1.0
-    psiplus[L,L, 0] = 0.0
+    psimoins[L,L,1] = 1.0
+    psiplus[L,L, 1] = 0.0
     a = e0
     b = 0.0 #b1
     listea[0] = a #rentre le a0 dans la liste
@@ -34,9 +34,9 @@ def plot_energy(L):
                 if n%2==0: #((abs(i)%2 == 0) and (abs(j)%2 == 0)) or ((abs(i)%2 == 1) and (abs(j)%2 == 1))
                     psiplus[i,j,0] = psiplus[i,j,0]+t*(psimoins[i-1,j,0]+ psimoins[i,j-1,0]+psimoins[i,j+1,0])+s*psimoins[i,j,1]+e0*psimoins[i,j,0]
                     psiplus[i,j,1] = psiplus[i,j,1]+t*(psimoins[i-1,j,1]+ psimoins[i,j-1,1]+psimoins[i,j+1,1])+s*psimoins[i,j,0]+e0*psimoins[i,j,1]
-            else: 
-                psiplus[i,j,0] = psiplus[i,j,0]+t*(psimoins[i+1,j,0]+ psimoins[i,j-1,0]+psimoins[i,j+1,0])+s*psimoins[i,j,1]+e0*psimoins[i,j,0]
-                psiplus[i,j,1] = psiplus[i,j,0]+t*(psimoins[i+1,j,1]+ psimoins[i,j-1,1]+psimoins[i,j+1,1])+s*psimoins[i,j,0]+e0*psimoins[i,j,1]
+                else: 
+                    psiplus[i,j,0] = psiplus[i,j,0]+t*(psimoins[i+1,j,0]+ psimoins[i,j-1,0]+psimoins[i,j+1,0])+s*psimoins[i,j,1]+e0*psimoins[i,j,0]
+                    psiplus[i,j,1] = psiplus[i,j,0]+t*(psimoins[i+1,j,1]+ psimoins[i,j-1,1]+psimoins[i,j+1,1])+s*psimoins[i,j,0]+e0*psimoins[i,j,1]
         for i in range(L-n,L+n+1):    
             for j in range(L-n,L+n+1) :  #parcours les nombres de L-n à L+n compris
                 aplus = aplus + psimoins[i,j,0]*psiplus[i,j,0] + psimoins[i,j,1]*psiplus[i,j,1]
@@ -115,5 +115,5 @@ def read_time():
     plt.plot(x,fit, color = 'green')
     plt.show()
 '''
-plot_energy(50)
+plot_energy(500)
 #read_time()
