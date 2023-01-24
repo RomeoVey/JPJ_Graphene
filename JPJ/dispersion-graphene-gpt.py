@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.animation as animation
 
 N = 1000
 
@@ -51,7 +52,15 @@ fig = plt.figure(2)
 ax = fig.add_subplot(111, projection='3d')
 ax.plot_surface(kx, ky, E, cmap='rainbow')
 ax.plot_surface(kx, ky, -E, cmap='rainbow_r',alpha = 0.75)
-ax.set_xlabel('kx')
-ax.set_ylabel('ky')
-ax.set_zlabel('Energy')
-plt.show()
+ax.set_xlabel('kx',fontsize = 'large')
+ax.set_ylabel('ky',fontsize = 'large')
+ax.set_zlabel('Energy',fontsize = 'large')
+
+
+def rotate(angle):
+        ax.view_init(azim=angle)   
+
+
+print("Making animation")
+rot_animation = animation.FuncAnimation(fig, rotate, frames=np.arange(0, 362, 2), interval=100)
+rot_animation.save('JPJ/Dispersion_surfaces.gif', dpi=80)

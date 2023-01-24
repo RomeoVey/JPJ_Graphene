@@ -8,6 +8,7 @@ from cmath import *
 import matplotlib 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import matplotlib.animation as animation
 from numpy import *
 from mpl_toolkits import mplot3d
 
@@ -38,10 +39,11 @@ def energy_line(kx,ky,t,a):
     ind_min2 = L2.index(min(L2)) + N//2
 
     fig , (ax1,ax2) = plt.subplots(1,2 , sharey = True)
-    fig.suptitle("Relation de dispersion suivant certaine direction de l'espace réciproque")
+    fig.suptitle("Relation de dispersion suivant ΓMK dans l'espace réciproque")
     ax1.plot(kx[N//2:ind_min],M_plusGM[N//2:ind_min])
     ax1.plot(kx[N//2:ind_min],M_moinsGM[N//2:ind_min])
     locator_ax1 = linspace(kx[N//2],kx[ind_min],4)
+    ax1.set_ylabel('Energie')
     ax1.xaxis.set_major_locator(ticker.FixedLocator(locator_ax1))
     ax1.xaxis.set_ticklabels(['Γ','','', 'M'])
     ax1.grid()
@@ -53,11 +55,13 @@ def energy_line(kx,ky,t,a):
     ax2.xaxis.set_major_locator(ticker.FixedLocator(locator_ax2))
     ax2.xaxis.set_ticklabels(['M','','', 'K'])
     ax2.grid()
+    ax2.legend(('E+','E-'), fontsize = 'large')
     plt.show()
     
-    
+
 def plot_energy(kx,ky,t,a):
-    ax = plt.axes(projection = '3d')
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection = '3d')
     M_plus = zeros((N,N))
     M_moins = zeros((N,N))
     for i in range(len(kx)):
@@ -89,7 +93,25 @@ def plot_energy(kx,ky,t,a):
         ky_fix = ky_less[j]*ones(l_kx)
         ax.plot3D(kx_less,ky_fix,MP[:,j], color = 'blue')
         ax.plot3D(kx_less,ky_fix,MM[:,j], color = 'red')
-    plt.show()
+    
+    ax.set_xlabel('kx',fontsize = 'large')
+    ax.set_ylabel('ky',fontsize = 'large')
+    ax.set_zlabel('Energy',fontsize = 'large')
+    ax.legend(('E+','E-'), fontsize = 'large')
+    
+
+    
+    def rotate(angle):
+        ax.view_init(azim=angle)   
+
+
+    print("Making animation")
+    rot_animation = animation.FuncAnimation(fig, rotate, frames=arange(0, 362, 2), interval=100)
+    rot_animation.save('rotation.gif', dpi=80, writer='Pillow')
+
+
+
+
 
 #plot_energy(kx,ky,t,a)
 

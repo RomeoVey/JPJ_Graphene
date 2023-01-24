@@ -13,7 +13,7 @@ from numpy import *
 t = 1.0  #énergie de saut
 e0=0.0 #énergie de site
 eps = 0.00001  #élement infinitésimal
-N = 150
+N = 1500
 psimoins = zeros((2*N+1,2*N+1))  #tableau indicé de 0 à 2N compris
 psiplus = zeros((2*N+1,2*N+1))  #tableau indicé de 0 à 2N compris
 listea = zeros(N+1)  #tableau indicé de 0 à N compris
