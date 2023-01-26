@@ -8,12 +8,12 @@ from cmath import *
 import matplotlib 
 import matplotlib.pyplot as plt
 from numpy import *
-
+from time import *
 #Création des objets et paramètres
 t = 1.0  #énergie de saut
 e0=0.0 #énergie de site
 eps = 0.00001  #élement infinitésimal
-N = 1500
+N = 1000
 psimoins = zeros((2*N+1,2*N+1))  #tableau indicé de 0 à 2N compris
 psiplus = zeros((2*N+1,2*N+1))  #tableau indicé de 0 à 2N compris
 listea = zeros(N+1)  #tableau indicé de 0 à N compris
@@ -29,7 +29,7 @@ listeb[0] = b #rentre le b0 dans la liste
 
 
 ########################################
-
+ti = time()
 #Calculs des coefs
 for n in range(1,N):#parcours les nombres de 1 à N-1 compris
     aplus=0  #remet à zero la variable locale
@@ -62,7 +62,9 @@ for n in range(1,N):#parcours les nombres de 1 à N-1 compris
 
     listea[n] = a  #modifie la liste petit à petit
     listeb[n] = b
-      
+
+    print("Temps iteration :", round(time()-ti,2),"s\t"+str(n)+"/"+str(N))
+    ti = time()
 #Calculs des coefs infinis
 ainf = 0.0
 binf = 0.0        
@@ -73,14 +75,14 @@ ainf = ainf/10
 binf = binf/10
 listea[N] = ainf
 listeb[N] = binf
-print("a=",listea)
-print("b=",listeb)
+#print("a=",listea)
+#print("b=",listeb)
 
 #Calcul de la densité sous forme de fonction        
 def densite(E):
     G = (E - ainf -1j*sqrt(-(E - ainf)**2 + 4*binf**2))/(2*binf**2)  #calcul de Ginfini
     for i in range(N,0,-1): #parcours les nombres de N à 0 compris
-        print("in densité i=",i,"b=",listeb[i])
+        #print("in densité i=",i,"b=",listeb[i])
         G = 1/(E - listea[i] - G*listeb[i]**2)  #calcul de la fraction continue
     nmu = abs((1/pi)*G.imag)  #calcul de la densite en prenant la valeur absolue
     return nmu
@@ -93,9 +95,12 @@ pre_int = dos*energy
 s=0
 for i in range(len(energy)//2 + 1): s+=  0.01*pre_int[i]
 
-print(s)
+#print(s)
 
 plt.plot(energy,dos) 
+plt.xlabel("Energie")
+plt.ylabel('DOS')
+plt.suptitle("DOS d'une couche de graphène")
 plt.grid()
 plt.show() # trace le graphique
 
